@@ -1,10 +1,10 @@
-# __PROJECT_NAME__
+# cvpc
 
-[![PyPI](https://img.shields.io/pypi/v/__PROJECT_NAME__?style=flat-square)](https://pypi.org/project/__PROJECT_NAME__/)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/__PROJECT_NAME__?style=flat-square)
-[![GitHub](https://img.shields.io/github/license/__GITHUB_ID__/__PROJECT_NAME__?style=flat-square)](https://github.com/__GITHUB_ID__/__PROJECT_NAME__/)
+[![PyPI](https://img.shields.io/pypi/v/cvpc?style=flat-square)](https://pypi.org/project/cvpc/)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/cvpc?style=flat-square)
+[![GitHub](https://img.shields.io/github/license/osom8979/cvpc?style=flat-square)](https://github.com/osom8979/cvpc/)
 
-__PROJECT_DESC__
+Computer Vision Player Core
 
 ## How to initialize boilerplate
 
@@ -37,4 +37,4 @@ __PROJECT_DESC__
 ## License
 
 See the [LICENSE](./LICENSE) file for details. In summary,
-**__PROJECT_NAME__** is licensed under the **MIT license**.
+**cvpc** is licensed under the **MIT license**.

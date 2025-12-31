@@ -37,6 +37,11 @@ DEFAULT_API_HTTP_HOST: Final[str] = "0.0.0.0"
 DEFAULT_API_HTTP_PORT: Final[int] = 8080
 DEFAULT_API_HTTP_TIMEOUT: Final[float] = 8.0
 
+DEFAULT_WS_URL: Final[str] = ""
+DEFAULT_WS_CONNECT_TIMEOUT: Final[float] = 10.0
+DEFAULT_WS_PING_INTERVAL: Final[float] = 30.0
+DEFAULT_WS_PING_TIMEOUT: Final[float] = 10.0
+
 PRINTER_ATTR_KEY: Final[str] = "_printer"
 
 VERBOSE_LEVEL_0: Final[int] = 0
@@ -95,6 +100,42 @@ def add_agent_parser(subparsers) -> None:
         metavar="sec",
         type=float,
         help=f"Common timeout in seconds (default: {DEFAULT_API_HTTP_TIMEOUT})",
+    )
+    parser.add_argument(
+        "--ws-url",
+        default=get_eval("WS_URL", DEFAULT_WS_URL),
+        metavar="url",
+        help=(
+            f"WebSocket URL for Cloudflare Durable Objects "
+            f"(default: '{DEFAULT_WS_URL}')"
+        ),
+    )
+    parser.add_argument(
+        "--ws-connect-timeout",
+        default=get_eval("WS_CONNECT_TIMEOUT", DEFAULT_WS_CONNECT_TIMEOUT),
+        metavar="sec",
+        type=float,
+        help=(
+            f"WebSocket connection timeout in seconds "
+            f"(default: {DEFAULT_WS_CONNECT_TIMEOUT})"
+        ),
+    )
+    parser.add_argument(
+        "--ws-ping-interval",
+        default=get_eval("WS_PING_INTERVAL", DEFAULT_WS_PING_INTERVAL),
+        metavar="sec",
+        type=float,
+        help=(
+            f"WebSocket ping interval in seconds "
+            f"(default: {DEFAULT_WS_PING_INTERVAL})"
+        ),
+    )
+    parser.add_argument(
+        "--ws-ping-timeout",
+        default=get_eval("WS_PING_TIMEOUT", DEFAULT_WS_PING_TIMEOUT),
+        metavar="sec",
+        type=float,
+        help=f"WebSocket ping timeout in seconds (default: {DEFAULT_WS_PING_TIMEOUT})",
     )
     parser.add_argument(
         "opts",

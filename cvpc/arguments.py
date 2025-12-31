@@ -21,14 +21,14 @@ Apply general debugging options:
   {PROG} -D ...
 """
 
-CMD_MASTER: Final[str] = "master"
-CMD_MASTER_HELP: Final[str] = "Endpoint server for HTTP API"
-CMD_MASTER_EPILOG = f"""
+CMD_AGENT: Final[str] = "agent"
+CMD_AGENT_HELP: Final[str] = "Endpoint server for HTTP API"
+CMD_AGENT_EPILOG = f"""
 Simply usage:
-  {PROG} {CMD_MASTER}
+  {PROG} {CMD_AGENT}
 """
 
-CMDS: Final[Sequence[str]] = (CMD_MASTER,)
+CMDS: Final[Sequence[str]] = (CMD_AGENT,)
 
 LOCAL_DOTENV_FILENAME: Final[str] = ".env.local"
 TEST_DOTENV_FILENAME: Final[str] = ".env.test"
@@ -67,13 +67,13 @@ def add_dotenv_arguments(parser: ArgumentParser) -> None:
     )
 
 
-def add_master_parser(subparsers) -> None:
+def add_agent_parser(subparsers) -> None:
     # noinspection SpellCheckingInspection
     parser = subparsers.add_parser(
-        name=CMD_MASTER,
-        help=CMD_MASTER_HELP,
+        name=CMD_AGENT,
+        help=CMD_AGENT_HELP,
         formatter_class=RawDescriptionHelpFormatter,
-        epilog=CMD_MASTER_EPILOG,
+        epilog=CMD_AGENT_EPILOG,
     )
     assert isinstance(parser, ArgumentParser)
     parser.add_argument(
@@ -190,7 +190,7 @@ def default_argument_parser() -> ArgumentParser:
     )
 
     subparsers = parser.add_subparsers(dest="cmd")
-    add_master_parser(subparsers)
+    add_agent_parser(subparsers)
     return parser
 
 

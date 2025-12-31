@@ -5,15 +5,15 @@ from asyncio.exceptions import CancelledError
 from functools import lru_cache
 from typing import Callable, Dict
 
-from cvpc.apps.master import master_main
-from cvpc.arguments import CMD_MASTER
+from cvpc.apps.agent import agent_main
+from cvpc.arguments import CMD_AGENT
 from cvpc.logging.logging import logger
 
 
 @lru_cache
 def cmd_apps() -> Dict[str, Callable[[Namespace], None]]:
     return {
-        CMD_MASTER: master_main,
+        CMD_AGENT: agent_main,
     }
 
 

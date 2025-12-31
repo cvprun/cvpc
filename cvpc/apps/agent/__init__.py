@@ -3,7 +3,7 @@
 from argparse import Namespace
 
 
-def master_main(args: Namespace) -> None:
+def agent_main(args: Namespace) -> None:
     assert isinstance(args.api_http_bind, str)
     assert isinstance(args.api_http_port, int)
     assert isinstance(args.api_http_timeout, float)

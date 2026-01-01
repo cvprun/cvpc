@@ -22,13 +22,27 @@ Apply general debugging options:
 """
 
 CMD_AGENT: Final[str] = "agent"
-CMD_AGENT_HELP: Final[str] = "Endpoint server for HTTP API"
+CMD_AGENT_HELP: Final[str] = "WebSocket agent for Cloudflare Durable Objects"
 CMD_AGENT_EPILOG = f"""
 Simply usage:
-  {PROG} {CMD_AGENT}
+  {PROG} {CMD_AGENT} --ws-url ws://your-server.com
 """
 
-CMDS: Final[Sequence[str]] = (CMD_AGENT,)
+CMD_SERVER: Final[str] = "server"
+CMD_SERVER_HELP: Final[str] = "HTTP API server"
+CMD_SERVER_EPILOG = f"""
+Simply usage:
+  {PROG} {CMD_SERVER}
+"""
+
+CMD_CLI: Final[str] = "cli"
+CMD_CLI_HELP: Final[str] = "Interactive CLI interface"
+CMD_CLI_EPILOG = f"""
+Simply usage:
+  {PROG} {CMD_CLI}
+"""
+
+CMDS: Final[Sequence[str]] = (CMD_AGENT, CMD_SERVER, CMD_CLI)
 
 LOCAL_DOTENV_FILENAME: Final[str] = ".env.local"
 TEST_DOTENV_FILENAME: Final[str] = ".env.test"
@@ -69,6 +83,58 @@ def add_dotenv_arguments(parser: ArgumentParser) -> None:
         default=get_eval("DOTENV_PATH", join(getcwd(), LOCAL_DOTENV_FILENAME)),
         metavar="file",
         help=f"Specifies the dot-env file (default: '{LOCAL_DOTENV_FILENAME}')",
+    )
+
+
+def add_server_parser(subparsers) -> None:
+    # noinspection SpellCheckingInspection
+    parser = subparsers.add_parser(
+        name=CMD_SERVER,
+        help=CMD_SERVER_HELP,
+        formatter_class=RawDescriptionHelpFormatter,
+        epilog=CMD_SERVER_EPILOG,
+    )
+    assert isinstance(parser, ArgumentParser)
+    parser.add_argument(
+        "--api-http-bind",
+        default=get_eval("API_HTTP_HOST", DEFAULT_API_HTTP_HOST),
+        metavar="host",
+        help=f"Host address (default: '{DEFAULT_API_HTTP_HOST}')",
+    )
+    parser.add_argument(
+        "--api-http-port",
+        default=get_eval("API_HTTP_PORT", DEFAULT_API_HTTP_PORT),
+        metavar="port",
+        type=int,
+        help=f"Port number (default: {DEFAULT_API_HTTP_PORT})",
+    )
+    parser.add_argument(
+        "--api-http-timeout",
+        default=get_eval("API_HTTP_TIMEOUT", DEFAULT_API_HTTP_TIMEOUT),
+        metavar="sec",
+        type=float,
+        help=f"Common timeout in seconds (default: {DEFAULT_API_HTTP_TIMEOUT})",
+    )
+    parser.add_argument(
+        "opts",
+        nargs=REMAINDER,
+        help="Arguments of module",
+    )
+
+
+def add_cli_parser(subparsers) -> None:
+    # noinspection SpellCheckingInspection
+    parser = subparsers.add_parser(
+        name=CMD_CLI,
+        help=CMD_CLI_HELP,
+        formatter_class=RawDescriptionHelpFormatter,
+        epilog=CMD_CLI_EPILOG,
+    )
+    assert isinstance(parser, ArgumentParser)
+    parser.add_argument(
+        "opts",
+        nargs=REMAINDER,
+        help="Arguments of module",
     )
 
 
@@ -232,6 +298,8 @@ def default_argument_parser() -> ArgumentParser:
 
     subparsers = parser.add_subparsers(dest="cmd")
     add_agent_parser(subparsers)
+    add_server_parser(subparsers)
+    add_cli_parser(subparsers)
     return parser
 
 
